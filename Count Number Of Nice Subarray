@@ -1,0 +1,29 @@
+ class Solution {
+  public:
+    int numberOfSubarrays(vector < int > & nums, int k) {
+      int ans = 0;//NO OF SUBARRAYS STORED WITH K ODD NOS 
+      int n = nums.size();
+      int oddCount = 0;//STORING COUNT OF ODD NOS 
+      int slidingEnd = 0, slidingStart = 0;//POINTERS FOR THE WINDOW 
+      queue < int > q;//QUEUE FOR STORING THE LAST INDEX AT WHICH ODD ELEMNT WAS PRESENT AS IT WILL BE NOT BE ALWAYS THE CASE WHERE J WILL HV THE LAST ODD ELMNT INDEX
+      //Q.FRONT - I +1 WILL GIVE THE LENGTH AND NO OF SUBARRAYS 
+      while (slidingEnd < n) {
+        if (nums[slidingEnd] % 2 != 0) {
+          ++oddCount;//IF ODD THEN COUNT++
+          q.push(slidingEnd);//PUSH IN QUEUE THE INDEX OF THE ODD ELMNT IN QUEUE
+          //QUEEU IS FIFO 
+        }
+        if (oddCount > k) {//IF COUNT>K
+          while (oddCount != k) {//TILL COUNT BCMS ==K
+            if (nums[slidingStart] % 2 != 0) --oddCount;//WE REMOVE THE OPS FROM THE FRONT END THAT IS ODD COUNT-- 
+            ++slidingStart;//I++ MOVING THE WINDOW AHEAD 
+          }
+          q.pop();//FIRST ELMNT WHICH HAD THE ODD ELMNT INDEX IT IS REMOVED AS POP IN QUEUE REMOVES THE FIRST ELMNT INSERTED 
+        }
+        if (oddCount == k) ans += (q.front() - slidingStart + 1);//IF EQUAL TO K JUST ADD IT TO ANS 
+        //Q,FRONT() IS THE LAST INDEX AT WHICH ODD ELMNT OCCURED 
+        ++slidingEnd;//J++
+      }
+      return ans;//RETURN THE ANS 
+    }
+};
