@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+        map<int,int>m;//MAP FOR STORING FREQ OF CHARACTER
+        int i=0;int j=0;//2 POINTER OF SLIDING WINDOW 
+        int n=fruits.size();
+        if(fruits.size()==1){
+            return 1;
+        }//EDGE TEST CASE 
+        int mx=0;//MAX SIZE POSSIBEL 
+        while(j<n){
+            m[fruits[j]]++;//INCREASING COUNT OF THE UPCOMING CHARACTER 
+            if(m.size()<2){//IF SIZE <2 MEANS IT FITS IN EITHER OF THE TWO BASKETS
+                j++;//J++
+            }
+            else if(m.size()==2){
+                mx=max(mx,j-i+1);//IF EQUALS TO 2 MEANS THIS IS ONE POSSIBLE CASE SO MAX OF LENGHT OF SLIDNG WINDOW 
+                j++;
+            }
+            else{
+                while(m.size()>2){//IF 3RD OR OTHER TYPE MORE THAN 2 COMES IN THE MAP >2
+                    m[fruits[i]]--;//DECREASE THE COUNT OF THAT ELMNT 
+                    if(m[fruits[i]]==0){
+                        m.erase(fruits[i]);
+                    }//IF FREQ BCMS 0 REMOVE IT FROM THE MAP 
+                    i++;//I++
+                }
+                j++;//J++ TOH EVERYTIME 
+            }
+        }
+        if(mx!=0){
+        return mx;
+        }//IF !=0 THEN RETURN THE MAX MX 
+        //THIS PART EXTRA FOR HANDLING TEST CASES WHERE IF ALL R REPEATING ELMNTS THEN WE WOULD HV OP 0 WITHOUT THIS SO WE SUM UP THE SECOND PART OF MAP WHICH IS THE NO OF ELMNTS WHICH WE CAN PICK ALL BEING OF THE SMAE TYPE 
+        int s=0;
+        for(auto x:m){
+            s=s+x.second;
+        }
+        return s;
+    }
+};
