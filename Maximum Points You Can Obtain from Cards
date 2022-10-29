@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int maxScore(vector<int>& cardPoints, int k) {
+        vector<int> sum(cardPoints.size(),0);//STORES CUMULATIVE SUM OF ARRAY ELMNTS AT EACH INDEX POSITION 
+        int s1=0;//STORES TOTAL SUM OF ARRAY 
+        for(int i=0;i<cardPoints.size();i++){
+            s1=s1+cardPoints[i];
+            sum[i]=s1;
+        }
+        if(k==cardPoints.size()){
+            return s1;
+        }//EDGE TC 
+        int score=0;int ans=0;
+        for(int i=0;i<=k;i++){//I CAN GO MAX UP TO KTH INDEX AS WE NEED TO MAXIMISE THE DIFF BTW TOTAL SUM AND SUM OF THE SUBARRAY WE NEED TO REMMOVE AFTER PICKING K CARDS
+            int j=i+cardPoints.size() -k-1;//J INDEX POSIITON FOR SUBARRAY ..SUBARRAY RANGES FROM I TH TH JTH INDEX 
+            if(i==0){
+                ans=sum[j];
+            }//IF I==0 
+            else{
+                ans=sum[j]-sum[i-1];//SUM OF SUBARRAY WE WANT TO REMVE AFTER PICKING THE K CARDS IN HERE 
+            }//ELSE SUM[J]-SUM[I-1] WILL GIVE THE SUM OF THE SUBARRAY WHICH NEEDS TO BE REMOVED 
+                score=max(score,s1-ans);//SCORE IS STORING THE MAX SCORE 
+        }
+        return score;
+    }
+};
