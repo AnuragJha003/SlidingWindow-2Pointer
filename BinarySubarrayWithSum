@@ -1,0 +1,34 @@
+class Solution {
+public:
+
+	int lessequal(vector<int>& nums, int goal) {//SLIDING WINDOW IMPLEMENTED 
+
+		if(goal < 0) return 0;//IF NEGATIVE SUM NOT POSSIBLE 
+
+		int n = nums.size();
+		int i = 0, j = 0;
+		int sum = 0;//SUM STORING VARIABLE 
+		int ans = 0;//ANS =0 NO OF SUBARRAY STORING VARIABLE 
+
+		while(j < n) {//J<N
+
+			sum += nums[j];//SUM =SUM+NUMS[J]
+
+			while(sum > goal) {//IF >GOAL 
+				sum -= nums[i];//THEN SUBTARCT THAT ELMNT FROM SUM ...OPS EXCLUDED 
+				i++;//THEN SLIDING THE WINDOW AHEAD 
+			}    
+			ans += j-i+1;        //STORING THE NUMBER OF SUBARRAY POSSIBILITY WITH SUM<=GOAL  
+			j++;  //++ INCREMENT 
+		}
+
+		return ans;    
+	}
+
+	int numSubarraysWithSum(vector<int>& nums, int goal) {
+
+		return lessequal(nums, goal) - lessequal(nums, goal - 1);
+	}
+};
+
+// our function is giving number of subarrays with sum less or equal to goal.
