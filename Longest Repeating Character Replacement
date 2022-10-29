@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        vector<int> count(26, 0);//VECTOR STORING COUNT OF ELMNT 
+        
+        int i=0, j=0;//2 POINTER FOR THE WINDOW 
+        
+        int maxCount=0;//MAX OCCURANCE OF SINGLE CHAR
+        
+        int res=0;//LENGTH
+        
+        while(j<s.size()){
+            count[s[j]-'A']+=1;//MAP M CHAR COUNT INCREASE
+            
+            maxCount=max(maxCount, count[s[j]-'A']);//MXCOUNT OF A CHARACTER 
+            
+            while(j-i+1-maxCount>k){//IF DIFFERNET LETTER AAYA THEN THAT IS (J-I+1)-MAXCOUNT GIVES US THE COUNT OF ELMNT WHICH CAN BE CONVERTED SO THAT ENTIRE SUBARRAY CONSISTS OF THE SAME ELMNT
+                count[s[i]-'A']-=1;//DECREASE ITS COUNT 
+                i+=1;//I++ FROM THE FRONT 
+                
+                for(int k=0;k<26;k++)
+                    maxCount=max(maxCount, count[k]);
+                //MAX COUNT OF ALL CHARACTERS 
+            }
+            
+            res=max(res, j-i+1);//MAX LENGTH 
+            j+=1;//J++
+        }
+        
+        return res;
+        
+    }
+};
