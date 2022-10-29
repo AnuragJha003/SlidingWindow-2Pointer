@@ -1,0 +1,21 @@
+#include <cmath>
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        std::unordered_map<char,int> window;//MAPP TAKEN TO STORE FREQ OF CHARACTER 
+        
+        int left=0, right=0;//2 POINTER TAKEN FOR THE SLIDING WINDOW 
+        int res = 0;//STORING LEN MAX OF SUBSTRING 
+        while (right < s.size()){//J<N
+            char c = s[right++];
+            window[c]++;//INCREMENTING FREQUENCY OF CHARACTER IN MAP AND THEN INCREASING THE RIGHT POINTER ++
+            
+            while(window[c]>1) {//IF >1 FREQ MEANS REPEATING ELMNTS 
+                char d=s[left++];//AND ALSO KEEP INCREMENTING THE LEFT POINTER ++
+                window[d]--;//DECREASE COUNT OF THAT ELMNT UNTIL IT BECOMES 1 
+            }
+            res = max(res, right - left);//MAX SLDING WINDOW LENGHT OF THE PROCESS RIGHT-LEFT
+        }
+        return res;
+    }
+};
