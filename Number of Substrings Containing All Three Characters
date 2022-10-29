@@ -1,0 +1,24 @@
+class Solution {
+public:
+int numberOfSubstrings(string s) {//NO OF SUBSTRINGS CONTAINING A B AND C ATLEAST ONCE 
+
+    int a=0,b=0,c=0;//COUNTS OF A B AND C COULD ALSO USE A MAP NO PROBLEM 
+    int n=s.size();
+    int j=0,i=0;//2 POINTERS FOR THE WINDOW 
+    int ans=0;//STORING COUNT OF SUCH SUBSTRING 
+    while(j<n){
+        if(s[j]=='a')a++;
+        else if(s[j]=='b')b++;
+        else c++;        //INCREASING COUNT OF A/B/C IN THE STRING         
+        while(a>=1&&b>=1&&c>=1){//IF A B AND C OCCUR AT LEAST ONCE AS IS THE CONDIITON IN THE QUESTION
+                ans+=n-j;//THEN N-J ADDED THAT IS IF ANY OTHER UPCOMING CHARATCER IS ADDED IT STILL SATISFIES THE SUBSTIRNG CONDITION SO ANS+=N-J REMAING CHAR COUNT ADDED
+                 if(s[i]=='a')a--;//IF FRONT PART OF WINDOW A DECREASE
+                 else if(s[i]=='b')b--;//B THEN DECREASE
+                 else c--;//SAME FOR C 
+                 i++;//NOW OPS EXCLUDED NOW SLIDE THE WINDOW BY I++
+            }//END OF WHILE LOOP
+        j++;//J TOH ALWAYS INCREASES 
+    }
+    return ans;//FINALLY RETURN ANS 
+}
+};
